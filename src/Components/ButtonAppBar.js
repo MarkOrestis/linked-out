@@ -12,7 +12,7 @@ const styles = {
     flexGrow: 1,
   },
   grow: {
-    flexGrow: 1,
+    flexDirection: "row",
   },
   menuButton: {
     marginLeft: -12,
