@@ -9,7 +9,7 @@ import RegistrationForm from './Components/RegistrationForm';
 class App extends Component {
   render() {
     return (
-      <Profile></Profile>
+      <Dashboard></Dashboard>
     );
   }
 }
