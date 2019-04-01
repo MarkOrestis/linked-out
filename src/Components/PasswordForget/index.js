@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import {Link as Wow}   from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import Link from '@material-ui/core/Link';
+import { auth } from 'firebase';
+
 
 const PasswordForgetPage = () => (
   <div>
@@ -67,10 +70,18 @@ class PasswordForgetFormBase extends Component {
 }
 
 const PasswordForgetLink = () => (
-  <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
-  </p>
+  <div>
+    <Wow to={ROUTES.PASSWORD_FORGET}>    
+      <Link  style={ linkStyle } component="button" variant="body2">Forgot Password?</Link>
+    </Wow>
+  </div>
 );
+
+export const linkStyle = {
+  margin: '5px auto',
+  width: '100%'
+
+}
 
 export default PasswordForgetPage;
 

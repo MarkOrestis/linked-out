@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link as Wow, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import Typography from '@material-ui/core/Typography';
+import { linkStyle } from '../PasswordForget/index'
+
 
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
+import Link from '@material-ui/core/Link'
 
 
 const SignUpPage = () => (
@@ -116,10 +120,18 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+  <div style={moreLinks}>
+    <Typography inline variant="body2" gutterBottom>
+    Don't have an account?</Typography>
+    <Wow to={ROUTES.SIGN_UP}>
+      <Link component="button" variant="body2">Sign Up</Link>
+    </Wow>
+  </div>    
 );
+
+const moreLinks = {
+  margin: '0 45%'
+}
 
 const SignUpForm = compose(
   withRouter,
