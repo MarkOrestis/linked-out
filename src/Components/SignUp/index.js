@@ -67,7 +67,6 @@ class SignUpFormBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
-    console.log(this.state.salary);
     event.preventDefault();
   }
 

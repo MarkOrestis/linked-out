@@ -294,6 +294,5 @@ Dashboard.propTypes = {
 
 const condition = authUser => !!authUser;
 
-// export default withAuthorization(condition)(HomePage);
-export default withStyles(styles)(Dashboard);
+export default withAuthorization(condition)(withStyles(styles)(Dashboard));
 
