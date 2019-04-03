@@ -21,8 +21,8 @@ import ProfileIcon from '@material-ui/icons/Person';
 import FriendsIcon from '@material-ui/icons/People';
 import FilterIcon from '@material-ui/icons/FilterList';
 import AllIcon from '@material-ui/icons/FormatAlignJustify';
-import Profile from './Profile';
-import Visualization from './Visualization';
+import Profile from './Home/Profile';
+import Visualization from './Home/Visualization';
 
 
 const drawerWidth = 240;
