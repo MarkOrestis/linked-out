@@ -1,0 +1,101 @@
+[
+  {
+    "uid": 1,
+    "email": "vivekraja07@gmail.com",
+    "username": "vivekraja07",
+    "name": "Vivekanand Rajasekar",
+    "major": "CS",
+    "gpa": 3.8,
+    "company": "Qualtrics",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 2,
+    "email": "fd",
+    "username": "fd",
+    "name": "Sai Naidu",
+    "major": "CS",
+    "gpa": 4,
+    "company": "Amazon",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 3,
+    "email": "fd",
+    "username": "fd",
+    "name": "Blake Jones",
+    "major": "CS",
+    "gpa": 4,
+    "company": "Qualtrics",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 4,
+    "email": "fd",
+    "username": "fd",
+    "name": "Bryan Zhang",
+    "major": "CS",
+    "gpa": 4,
+    "company": "Amazon",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 5,
+    "email": "fd",
+    "username": "fd",
+    "name": "Mark Osborne",
+    "major": "AE",
+    "gpa": 4,
+    "company": "ADP",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 6,
+    "email": "fd",
+    "username": "fd",
+    "name": "Bobby White",
+    "major": "AE",
+    "gpa": 4,
+    "company": "ADP",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 7,
+    "email": "fd",
+    "username": "fd",
+    "name": "Nicco Yang",
+    "major": "AE",
+    "gpa": 4,
+    "company": "Qualtrics",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 8,
+    "email": "fd",
+    "username": "fd",
+    "name": "Kelly Chen",
+    "major": "ME",
+    "gpa": 4,
+    "company": "Amazon",
+    "title": "Software Developer",
+    "salary": "80,000"
+  },
+  {
+    "uid": 9,
+    "email": "fd",
+    "username": "fd",
+    "name": "Kristie Teoh",
+    "major": "ME",
+    "gpa": 4,
+    "company": "ADP",
+    "title": "Software Developer",
+    "salary": "80,000"
+  }
+]
