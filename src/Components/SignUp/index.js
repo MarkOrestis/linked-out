@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link as Wow, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { linkStyle } from '../PasswordForget/index'
 
 
@@ -63,7 +67,7 @@ class SignUpFormBase extends Component {
       .catch(error => {
         this.setState({ error });
       });
-
+    console.log(this.state.salary);
     event.preventDefault();
   }
 
@@ -80,6 +84,8 @@ class SignUpFormBase extends Component {
       error,
     } = this.state;
 
+    const { classes } = this.props;
+
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
@@ -87,42 +93,142 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-              <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-         <button disabled={isInvalid} type="submit">
-         Sign Up
-         </button>
-
-        {error && <p>{error.message}</p>}
-
-      </form>
+      <React.Fragment>
+              <Typography variant="h6" gutterBottom>
+                Registration Form
+              </Typography>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="username"
+                    name="username"
+                    label="Username"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="firstName"
+                    name="firstName"
+                    label="First name"
+                    fullWidth
+                    autoComplete="fname"
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="lastName"
+                    name="lastName"
+                    label="Last name"
+                    fullWidth
+                    autoComplete="lname"
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="passwordOne"
+                    type="password"
+                    name="passwordOne"
+                    label="Password"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="passwordTwo"
+                    type="password"
+                    name="passwordTwo"
+                    label="Confirm Password"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="city"
+                    name="city"
+                    label="City"
+                    fullWidth
+                    autoComplete="billing address-level2"
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField id="state" name="state" label="State/Province/Region" fullWidth />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="major"
+                    name="major"
+                    label="Major"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="gpa"
+                    name="gpa"
+                    label="GPA"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="company"
+                    name="company"
+                    label="Company"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="salary"
+                    name="salary"
+                    label="Salary"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Button
+                type="submit"
+                disabled={isInvalid}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={this.onSubmit}
+              >
+                Register
+              </Button>
+              {error && <p>{error.message}</p>}
+              </Grid>
+            </React.Fragment>
     );
   }
 }
@@ -137,6 +243,15 @@ const SignUpLink = () => (
   </div>    
 );
 
+
+const styles = theme => ({
+  submit: {
+    marginLeft: '45%',
+    marginRight: '45%',
+    marginTop: theme.spacing.unit * 3,
+  },
+
+});
 const moreLinks = {
   margin: '0 45%'
 }
@@ -146,6 +261,6 @@ const SignUpForm = compose(
   withFirebase,
 )(SignUpFormBase);
 
-export default SignUpPage;
+export default withStyles(styles)(SignUpPage);
 
 export { SignUpForm, SignUpLink };
