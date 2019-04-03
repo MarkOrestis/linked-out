@@ -19,6 +19,7 @@ class RegistrationForm extends React.Component {
         super(props);
   
         this.state={
+            username: "",
             fname: "",
             lname: "",
             email: "",
@@ -45,12 +46,34 @@ class RegistrationForm extends React.Component {
 
     render() {
         const { classes } = this.props;
+        const { username } = this.state;
         return (
             <React.Fragment>
               <Typography variant="h6" gutterBottom>
                 Registration Form
               </Typography>
               <Grid container spacing={24}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="username"
+                    value={username}
+                    name="username"
+                    label="Username"
+                    fullWidth
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    onChange={this.handleChange}
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -76,9 +99,10 @@ class RegistrationForm extends React.Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="email"
-                    name="email"
-                    label="Email"
+                    id="password"
+                    type="password"
+                    name="password"
+                    label="Password"
                     fullWidth
                     onChange={this.handleChange}
                   />
@@ -89,7 +113,7 @@ class RegistrationForm extends React.Component {
                     id="password"
                     type="password"
                     name="password"
-                    label="Password"
+                    label="Confirm Password"
                     fullWidth
                     onChange={this.handleChange}
                   />
