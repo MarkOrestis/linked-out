@@ -22,6 +22,14 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  major: '',
+  company: '',
+  graduationYear: '',
+  GPA: '',
+  City: '',
+  State: '',
+  salary: '',
+  position: '',
   error: null,
 };
 
