@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import picture from './avatar.png';
 
 const styles = theme => ({
 	avatar: {
@@ -154,10 +155,14 @@ class Profile extends React.Component {
 	
 	render() {
 		const { classes } = this.props;
+		if (document.getElementById('vis')) {
+	    	console.log("FOUND THE VIZ");
+	    	document.getElementById('vis').parentNode.removeChild(document.getElementById('vis'))
+		}
 		return (
 			<div className={classes.root}>
 				<Grid container justify="center" alignItems="center" direction="column">
-					<Avatar src="../images/dog.png" className={classes.avatar} />
+					<Avatar src={picture} className={classes.avatar} />
 					<Typography variant="h2" align="center">User Name</Typography>
 					<Button variant="outlined" color="primary" className={classes.contactButton}>
 						Contact

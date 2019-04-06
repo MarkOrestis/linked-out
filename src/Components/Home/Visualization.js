@@ -6,6 +6,7 @@ import * as d3 from 'd3v4';
 import data from './linkedout.csv';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import Dashboard from '../Dashboard.js';
 
 const styles = theme => ({
 	/*
@@ -54,9 +55,17 @@ class Visualization extends React.Component {
 	        .attr("className", "tooltip")
 	        .style("opacity", 0);
 
-	    var svg = d3.select("body").append("svg")
+	    if (document.getElementById('vis')) {
+	    	console.log("FOUND THE VIZ");
+	    	document.getElementById('vis').parentNode.removeChild(document.getElementById('vis'))
+	    }
+
+	    var svg = d3.select("main").append("svg")
+	    	.attr("id", "vis")
 	        .attr("width", w)
 	        .attr("height", h)
+
+	    console.log("ugh fuck just end me now");
 
 	    var simulation = d3.forceSimulation()
 	        .force("collide", d3.forceCollide(function (d) {
@@ -70,7 +79,7 @@ class Visualization extends React.Component {
 	    d3.csv(data, function (data) {
 
 	        data.forEach(function (d) {
-	        	console.log(d);
+	        	//console.log(d);
 	            d.r = radius;
 	            d.x = w / 2;
 	            d.y = h / 2;
@@ -79,7 +88,7 @@ class Visualization extends React.Component {
 
 	        var circles = svg.selectAll("circle")
 	            .data(data, function (d) { 
-	            	console.log(d);
+	            	//console.log(d);
 	            	return d.Timestamp;
 	            });
 
