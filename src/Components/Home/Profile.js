@@ -18,10 +18,7 @@ import picture from './avatar.png';
 import { withFirebase } from '../Firebase';
 import React, { Component } from 'react';
 
-import firebase from './firebase';
-
-import { AuthUserContext } from '../Session';
-
+import * as firebase from 'firebase'
 
 
 const styles = theme => ({
@@ -62,16 +59,16 @@ const styles = theme => ({
 });
 
 function BasicInfoContainer(props) {
-	//let { classes1 } = props;
   	return (
-  		<div /*className={classes1.basicInfo}*/>
+  		<div>
     		<Typography variant="h4" style={{ padding: '25px 0px 25px 25px' }}>
       			Basic Information
     		</Typography>
     		<Typography variant="body1" style={{ padding: '0px 0px 0px 25px'}}>
     			LinkedIn Profile:
     			<Link href={'https://www.linkedin.com'} style={{ padding: '0px 0px 0px 5px'}}>
-    				{'View [User] Profile'}
+						{/* {'View ' + this.state.user.fname + '\'s' + ' Profile'} */}
+						{'View ' + this.state.user.fname + '\'s' + ' Profile'}
     			</Link>
     		</Typography>
    		</div>
@@ -158,38 +155,32 @@ class Profile extends Component {
 
 		this.state = {
 			loading: false,
-			user: {},
+			user: 0,
+			value: 0,
 		  };
 	}
-
-	state = {
-		value: 0,
-	};
 
 	handleChange = (event, value) => {
 		this.setState({ value });
 	};
 
 	componentDidMount() {
-		console.log(firebase.auth().currentUser)
-		// this.setState({ loading: true });
-		// console.log(authUser)
-		// this.props.firebase.user().on('value', snapshot => {
-		// 	const userObject = snapshot.val();
-	  
-		// 	const userList = Object.keys(userObject).map(key => ({
-		// 	  ...userObject[key],
-		// 	  uid: key,
-		// 	}));
+		console.log(firebase.auth().currentUser.uid)
+		var id = firebase.auth().currentUser.uid;
 
-		// 	console.log(userList)
-	  
-		// 	this.setState({
-		// 	  user: userList,
-		// 	  loading: false,
-		// 	});
+		this.props.firebase.users().on('value', snapshot => {
+			const userObject = snapshot.val();
 
-		// });
+			var info = userObject[id]
+
+			console.log(info)
+	  
+			this.setState({
+			  user: info,
+			  loading: false,
+			});
+
+		});
 	}
 	
 	render() {
@@ -202,7 +193,7 @@ class Profile extends Component {
 			<div className={classes.root}>
 				<Grid container justify="center" alignItems="center" direction="column">
 					<Avatar src={picture} className={classes.avatar} />
-					<Typography variant="h2" align="center">User Name</Typography>
+					<Typography variant="h2" align="center">{this.state.user.fname + ' ' + this.state.user.lname}</Typography>
 					<Button variant="outlined" color="primary" className={classes.contactButton}>
 						Contact
 						<MailIcon className={classes.mailIcon}></MailIcon>
@@ -215,9 +206,108 @@ class Profile extends Component {
 		            <Tab label="Work" />
 		          </Tabs>
 		        </AppBar>
-		        {this.state.value === 0 && <BasicInfoContainer>User info woo</BasicInfoContainer>}
-        		{this.state.value === 1 && <EducationContainer>Education woo</EducationContainer>}
-        		{this.state.value === 2 && <WorkContainer>Work experience woo</WorkContainer>}
+						{this.state.value === 0 && 
+								<div>
+									<Typography variant="h4" style={{ padding: '25px 0px 25px 25px' }}>
+											Basic Information
+									</Typography>
+									<Typography variant="body1" style={{ padding: '0px 0px 0px 25px'}}>
+										LinkedIn Profile:
+										<Link href={this.state.user.linkedInURL} style={{ padding: '0px 0px 0px 5px'}}>
+											{'View ' + this.state.user.fname + '\'s' + ' Profile'}
+										</Link>
+									</Typography>
+									<Typography variant="body1" style={{ padding: '0px 0px 0px 25px'}}>
+										City: {this.state.user.city}
+										<br/>
+										State: {this.state.user.state}
+										<br/>
+										Email: {this.state.user.email}
+										<br/>
+									</Typography>
+							</div>
+						
+						}
+						{this.state.value === 1 && 
+							<div>
+								<Typography variant="h4" style={{ padding: '25px 0px 15px 25px' }}>
+										Undergraduate Education
+								</Typography>
+								<Card style={{ maxWidth: 500, margin: '0px 0px 25px 25px' }}>
+									<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '10px 0px 0px 15px'}}>
+													School
+											</Typography>
+											<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+										Georgia Institute of Technology
+											</Typography>
+									<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+													Graduation Year
+											</Typography>
+											<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+										{	this.state.user.gradYear}
+											</Typography>
+											<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+													Major
+											</Typography>
+											<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+												{this.state.user.major}
+											</Typography>
+											<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+													GPA
+											</Typography>
+											<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+												{this.state.user.gpa}
+											</Typography>
+							</Card>
+							 </div>
+						}
+						{this.state.value === 2 && 
+
+<div>
+		<Typography variant="h4" style={{ padding: '25px 0px 15px 25px' }}>
+				Work Experience
+		</Typography>
+		<Grid container spacing={40} style={{ padding: '0px 0px 0px 25px' }}>
+				<Grid >
+					<Card>
+						<div>
+							<CardContent>
+								<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '10px 0px 0px 15px'}}>
+												Company
+										</Typography>
+										<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+									{this.state.user.company}
+										</Typography>
+								<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+												Title
+										</Typography>
+										<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+										{this.state.user.title}
+								</Typography>
+
+								<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+												Salary
+										</Typography>
+										<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+										{this.state.user.salary}
+										</Typography>
+
+										<Typography color="textSecondary" gutterBottom style={{ fontSize: 14, padding: '0px 0px 0px 15px'}}>
+												Time
+										</Typography>
+										<Typography variant="h5" component="h2" style={{ padding: '0px 0px 10px 15px'}}>
+										2019
+										</Typography>
+							</CardContent>
+						</div>
+					</Card>
+				</Grid>
+		</Grid>
+		</div>
+						
+						
+							
+						}
 		    </div>
 		);
 	}
