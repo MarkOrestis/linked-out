@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { linkStyle } from '../PasswordForget/index'
-
 
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
@@ -27,12 +25,13 @@ const INITIAL_STATE = {
   passwordTwo: '',
   major: '',
   company: '',
-  graduationYear: '',
-  GPA: '',
-  City: '',
+  gradYear: '',
+  gpa: '',
+  city: '',
   State: '',
   salary: '',
-  position: '',
+  title: '',
+  linkedInURL: '',
   error: null,
 };
 
@@ -45,7 +44,11 @@ class SignUpFormBase extends Component {
   
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, major, company, gradYear,
+        gpa, city, state, salary, title, linkedInURL 
+      } = this.state;
+    console.log('major is: ', major)
+    console.log(company, city, state);
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -56,6 +59,15 @@ class SignUpFormBase extends Component {
           .set({
             username,
             email,
+            major,
+            company,
+            city,
+            state,
+            gradYear,
+            gpa,
+            salary,
+            title, 
+            linkedInURL
           });
       })
       .then(authUser => {
@@ -80,15 +92,29 @@ class SignUpFormBase extends Component {
       passwordOne,
       passwordTwo,
       error,
+      major,
+      city,
+      state,
+      title,
+      company,
+      linkedInURL,
+      gradYear,
+      gpa,
     } = this.state;
-
-    const { classes } = this.props;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      username === '' || 
+      major === '' ||
+      city === '' ||
+      state === '' ||
+      title === '' ||
+      company === '' ||
+      gradYear === '' ||
+      linkedInURL === '' ||
+      gpa === '';
 
     return (
       <React.Fragment>
@@ -172,7 +198,7 @@ class SignUpFormBase extends Component {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField id="state" name="state" label="State/Province/Region" fullWidth />
+                  <TextField required id="state" name="state" label="State/Province/Region" fullWidth onChange={this.onChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -207,9 +233,39 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
+                    id="title"
+                    name="title"
+                    label="Work Title"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
                     id="salary"
                     name="salary"
                     label="Salary"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="gradYear"
+                    name="gradYear"
+                    label="Graduation Year"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="linkedInURL"
+                    name="linkedInURL"
+                    label="LinkedIn URL"
                     fullWidth
                     onChange={this.onChange}
                   />
