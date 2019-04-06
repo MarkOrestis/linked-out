@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3v4';
-
+import Button from '@material-ui/core/Button';
 import { withFirebase } from '../Firebase';
-
 
 const styles = theme => ({
 	/*
@@ -19,7 +18,7 @@ const styles = theme => ({
       	border: '1px solid #e0e0e0',
       	textDecoration: 'none',
 	},
-
+	
 	tooltip: {
       position: 'absolute',
       textAlign: 'center',
@@ -79,7 +78,16 @@ class Visualization extends Component {
 
 	    var div = d3.select("#viz").append("div")
 	        .attr("className", "tooltip")
-	        .style("opacity", 0);
+	        .style("opacity", 0)
+	        .style("position", "absolute")
+	        .style('text-aligh', 'center')
+	        .style('width', '150px')
+	        .style('height', '60px')
+	        .style('padding', '2px')
+	        .style('font', '12px sans-serif')
+	        .style('border', '0px')
+	        .style('border-radius', '8px')
+	        .style('background', 'lightsteelblue');
 
 	    if (document.getElementById('vis')) {
 	    	console.log("FOUND THE VIZ");
@@ -135,7 +143,7 @@ class Visualization extends Component {
 	                div.transition()
 	                    .duration(200)
 	                    .style("opacity", .9);
-	                div.html("Name: " + (d.fname + ' ' + d.lname) +"<br/>" +
+	                div.html("Name: " + d.fname + ' ' + d.lname +"<br/>" +
 	                        "Major: " + d.major + "<br/>" +
 	                        "Company: " + d.company + "<br/>"
 	                )
@@ -247,18 +255,23 @@ class Visualization extends Component {
 		return (
 
 			<div>
-				<div id="viz">
-					{loading && <div>Loading ...</div>}
-				</div>
-				<div id="toolbar">
-					<button id="all" className='button'>All</button>
-					<button variant="contained" color="primary" id="year" className='button'>By Year</button>
-					<button variant="contained" color="primary" id="major" className='button'>By Major</button>
-					<button variant="contained" color="primary" id="gpa" className='button'>By GPA</button>
-					<button variant="contained" color="primary" id="company" className='button'>By Company</button>
-				</div>
-
-		    	<div id={"#" + this.props.id}></div>
+		    <div id={"#" + this.props.id}></div>
+		    <div id="toolbar">
+		      	<Button variant="contained" color="primary" id="all" className='button' style={{ margin: '5px 0px'}}>All</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="year" className='button' style={{ margin: '5px 0px'}}>By Year</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="major" className='button' style={{ margin: '5px 0px'}}>By Major</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="gpa" className='button' style={{ margin: '5px 0px'}}>By GPA</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="company" className='button' style={{ margin: '5px 0px'}}>By Company</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="salary" className='button' style={{ margin: '5px 0px'}}>By Salary</Button>
+		    </div>
+		    <div id="viz">
+				{loading && <div>Loading ...</div>}
+			</div>
 		    </div>
 		);
 	}

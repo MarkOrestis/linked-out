@@ -21,6 +21,8 @@ const SignUpPage = () => (
 const INITIAL_STATE = {
   username: '',
   email: '',
+  fname: '',
+  lname: '',
   passwordOne: '',
   passwordTwo: '',
   major: '',
@@ -28,7 +30,7 @@ const INITIAL_STATE = {
   gradYear: '',
   gpa: '',
   city: '',
-  State: '',
+  state: '',
   salary: '',
   title: '',
   linkedInURL: '',
@@ -41,14 +43,11 @@ class SignUpFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  
-
   onSubmit = event => {
+    console.log(this.state);
     const { username, email, passwordOne, major, company, gradYear,
-        gpa, city, state, salary, title, linkedInURL 
+        gpa, city, state, salary, title, linkedInURL, fname, lname
       } = this.state;
-    console.log('major is: ', major)
-    console.log(company, city, state);
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -58,6 +57,8 @@ class SignUpFormBase extends Component {
           .user(authUser.user.uid)
           .set({
             username,
+            fname,
+            lname,
             email,
             major,
             company,
@@ -83,6 +84,7 @@ class SignUpFormBase extends Component {
 
   onChange = event => {
       this.setState({ [event.target.name]: event.target.value });
+      console.log(this.state);
   };
 
   render() {
@@ -91,6 +93,8 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      fname,
+      lname,
       error,
       major,
       city,
@@ -102,11 +106,13 @@ class SignUpFormBase extends Component {
       gpa,
     } = this.state;
 
-    const isInvalid =
+    const isInvalid = 
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
+      fname === '' ||
+      lname === '' ||
       email === '' ||
-      username === '' || 
+      username === '' ||
       major === '' ||
       city === '' ||
       state === '' ||
@@ -115,6 +121,8 @@ class SignUpFormBase extends Component {
       gradYear === '' ||
       linkedInURL === '' ||
       gpa === '';
+
+      const array = [passwordOne, passwordTwo, fname, lname, email, username, major, city, state, title, company, gradYear, linkedInURL, gpa];
 
     return (
       <React.Fragment>
@@ -145,9 +153,9 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="firstName"
-                    name="firstName"
-                    label="First name"
+                    id="fname"
+                    name="fname"
+                    label="First Name"
                     fullWidth
                     autoComplete="fname"
                     onChange={this.onChange}
@@ -156,9 +164,9 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="lastName"
-                    name="lastName"
-                    label="Last name"
+                    id="lname"
+                    name="lname"
+                    label="Last Name"
                     fullWidth
                     autoComplete="lname"
                     onChange={this.onChange}
