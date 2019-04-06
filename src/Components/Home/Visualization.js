@@ -1,12 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
 import * as d3 from 'd3v4';
-import data from './linkedout.csv';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Dashboard from '../Dashboard.js';
+
+import { withFirebase } from '../Firebase';
+
 
 const styles = theme => ({
 	/*
@@ -38,12 +34,42 @@ const styles = theme => ({
     }
 });
 
-class Visualization extends React.Component {
+class Visualization extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false,
+			users: [],
+		  };
+	}
+
+	componentWillUnmount() {
+		this.props.firebase.users().off();
+	  }
+
 	componentDidMount() {
-		this.drawViz();
+		this.setState({ loading: true });
+		this.props.firebase.users().on('value', snapshot => {
+			const usersObject = snapshot.val();
+	  
+			const usersList = Object.keys(usersObject).map(key => ({
+			  ...usersObject[key],
+			  uid: key,
+			}));
+	  
+			this.setState({
+			  users: usersList,
+			  loading: false,
+			});
+			this.drawViz();			
+		  });
+
 	}
 
 	drawViz() {
+		var data = (this.state.users);
+
 		var w = 960, h = 500;
 
 	    var radius = .0005;
@@ -51,7 +77,7 @@ class Visualization extends React.Component {
 	    var centerScale = d3.scalePoint().padding(1).range([0, w]);
 	    var forceStrength = 0.05;
 
-	    var div = d3.select("body").append("div")
+	    var div = d3.select("#viz").append("div")
 	        .attr("className", "tooltip")
 	        .style("opacity", 0);
 
@@ -60,12 +86,10 @@ class Visualization extends React.Component {
 	    	document.getElementById('vis').parentNode.removeChild(document.getElementById('vis'))
 	    }
 
-	    var svg = d3.select("main").append("svg")
+	    var svg = d3.select("#viz").append("svg")
 	    	.attr("id", "vis")
 	        .attr("width", w)
 	        .attr("height", h)
-
-	    console.log("ugh fuck just end me now");
 
 	    var simulation = d3.forceSimulation()
 	        .force("collide", d3.forceCollide(function (d) {
@@ -75,11 +99,12 @@ class Visualization extends React.Component {
 	        .force("charge", d3.forceManyBody())
 	        .force("y", d3.forceY().y(h / 2))
 	        .force("x", d3.forceX().x(w / 2))
-
-	    d3.csv(data, function (data) {
+		
+		
+			console.log(data)
 
 	        data.forEach(function (d) {
-	        	//console.log(d);
+	        	// console.log(d);
 	            d.r = radius;
 	            d.x = w / 2;
 	            d.y = h / 2;
@@ -88,16 +113,18 @@ class Visualization extends React.Component {
 
 	        var circles = svg.selectAll("circle")
 	            .data(data, function (d) { 
-	            	//console.log(d);
-	            	return d.Timestamp;
+	            	// console.log(d);
+					// console.log(d.uid);
+
+					return d.uid;
 	            });
 
 	        var circlesEnter = circles.enter().append("circle")
 	            .attr("r", function (d, i) { return d.r; })
 	            .attr("cx", function (d, i) { return 175 + 25 * i + 2 * i ** 2; })
 	            .attr("cy", function (d, i) { return 250; })
-	            .style("fill", function (d, i) { return color(d.Major); })
-	            .style("stroke", function (d, i) { return color(d.Major); })
+	            .style("fill", function (d, i) { return color(d.major); })
+	            .style("stroke", function (d, i) { return color(d.major); })
 	            .style("stroke-width", 10)
 	            .style("pointer-events", "all")
 	            .call(d3.drag()
@@ -108,9 +135,9 @@ class Visualization extends React.Component {
 	                div.transition()
 	                    .duration(200)
 	                    .style("opacity", .9);
-	                div.html("Name: " + d.Name +"<br/>" +
-	                        "Major: " + d.Major + "<br/>" +
-	                        "Company: " + d.Company + "<br/>"
+	                div.html("Name: " + d.name +"<br/>" +
+	                        "Major: " + d.major + "<br/>" +
+	                        "Company: " + d.company + "<br/>"
 	                )
 	                    .style("left", (d3.event.pageX + 20) + "px")
 	                    .style("top", (d3.event.pageY - 50) + "px");
@@ -126,8 +153,6 @@ class Visualization extends React.Component {
 
 
 	        function ticked() {
-	            //console.log("tick")
-	            //console.log(data.map(function(d){ return d.x; }));
 	            circles
 	                .attr("cx", function (d) { return d.x; })
 	                .attr("cy", function (d) { return d.y; });
@@ -160,7 +185,7 @@ class Visualization extends React.Component {
 	            me.classed("selected", !me.classed("selected"))
 
 	            d3.selectAll("circle")
-	                .style("fill", function (d, i) { return color(d.Major); })
+	                .style("fill", function (d, i) { return color(d.major); })
 
 	            d3.selectAll("circle.selected")
 	                .style("fill", "none")
@@ -214,24 +239,29 @@ class Visualization extends React.Component {
 
 	        setupButtons();
 
-	    });
 	}
 
 	render() {
+		const { users, loading } = this.state;
 		const { classes } = this.props;
 		return (
+
 			<div>
-			<div id="toolbar">
-		      	<button id="all" className='button'>All</button>
-		      	<button variant="contained" color="primary" id="Year" className='button'>By Year</button>
-		      	<button variant="contained" color="primary" id="Major" className='button'>By Major</button>
-		      	<button variant="contained" color="primary" id="GPA" className='button'>By GPA</button>
-		      	<button variant="contained" color="primary" id="Company" className='button'>By Company</button>
-		    </div>
-		    <div id={"#" + this.props.id}></div>
+				<div id="viz">
+					{loading && <div>Loading ...</div>}
+				</div>
+				<div id="toolbar">
+					<button id="all" className='button'>All</button>
+					<button variant="contained" color="primary" id="year" className='button'>By Year</button>
+					<button variant="contained" color="primary" id="major" className='button'>By Major</button>
+					<button variant="contained" color="primary" id="gpa" className='button'>By GPA</button>
+					<button variant="contained" color="primary" id="company" className='button'>By Company</button>
+				</div>
+
+		    	<div id={"#" + this.props.id}></div>
 		    </div>
 		);
 	}
 }
 
-export default Visualization;
+export default withFirebase(Visualization);

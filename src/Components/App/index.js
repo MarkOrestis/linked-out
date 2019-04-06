@@ -14,6 +14,7 @@ import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
 const App = () => (
+  
   <Router>
     <div>
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
