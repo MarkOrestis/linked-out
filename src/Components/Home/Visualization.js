@@ -6,7 +6,6 @@ import * as d3 from 'd3v4';
 import data from './linkedout.csv';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
-import Dashboard from '../Dashboard.js';
 
 const styles = theme => ({
 	/*
@@ -23,7 +22,7 @@ const styles = theme => ({
       	border: '1px solid #e0e0e0',
       	textDecoration: 'none',
 	},
-
+	
 	tooltip: {
       position: 'absolute',
       textAlign: 'center',
@@ -51,9 +50,18 @@ class Visualization extends React.Component {
 	    var centerScale = d3.scalePoint().padding(1).range([0, w]);
 	    var forceStrength = 0.05;
 
-	    var div = d3.select("body").append("div")
+	    var div = d3.select("main").append("Tooltip")
 	        .attr("className", "tooltip")
-	        .style("opacity", 0);
+	        .style("opacity", 0)
+	        .style("position", "absolute")
+	        .style('text-aligh', 'center')
+	        .style('width', '150px')
+	        .style('height', '60px')
+	        .style('padding', '2px')
+	        .style('font', '12px sans-serif')
+	        .style('border', '0px')
+	        .style('border-radius', '8px')
+	        .style('background', 'lightsteelblue');
 
 	    if (document.getElementById('vis')) {
 	    	console.log("FOUND THE VIZ");
@@ -222,11 +230,17 @@ class Visualization extends React.Component {
 		return (
 			<div>
 			<div id="toolbar">
-		      	<button id="all" className='button'>All</button>
-		      	<button variant="contained" color="primary" id="Year" className='button'>By Year</button>
-		      	<button variant="contained" color="primary" id="Major" className='button'>By Major</button>
-		      	<button variant="contained" color="primary" id="GPA" className='button'>By GPA</button>
-		      	<button variant="contained" color="primary" id="Company" className='button'>By Company</button>
+		      	<Button variant="contained" color="primary" id="all" className='button' style={{ margin: '5px 0px'}}>All</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="Year" className='button' style={{ margin: '5px 0px'}}>By Year</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="Major" className='button' style={{ margin: '5px 0px'}}>By Major</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="GPA" className='button' style={{ margin: '5px 0px'}}>By GPA</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="Company" className='button' style={{ margin: '5px 0px'}}>By Company</Button>
+		      	<div style={{width: 8, display: 'inline-block'}}/>
+		      	<Button variant="contained" color="primary" id="Salary" className='button' style={{ margin: '5px 0px'}}>By Salary</Button>
 		    </div>
 		    <div id={"#" + this.props.id}></div>
 		    </div>
