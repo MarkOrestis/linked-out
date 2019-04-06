@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { linkStyle } from '../PasswordForget/index'
-
 
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
@@ -23,16 +21,19 @@ const SignUpPage = () => (
 const INITIAL_STATE = {
   username: '',
   email: '',
+  fname: '',
+  lname: '',
   passwordOne: '',
   passwordTwo: '',
   major: '',
   company: '',
-  graduationYear: '',
-  GPA: '',
-  City: '',
-  State: '',
+  gradYear: '',
+  gpa: '',
+  city: '',
+  state: '',
   salary: '',
-  position: '',
+  title: '',
+  linkedInURL: '',
   error: null,
 };
 
@@ -42,10 +43,11 @@ class SignUpFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  
-
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    console.log(this.state);
+    const { username, email, passwordOne, major, company, gradYear,
+        gpa, city, state, salary, title, linkedInURL, fname, lname
+      } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -55,7 +57,18 @@ class SignUpFormBase extends Component {
           .user(authUser.user.uid)
           .set({
             username,
+            fname,
+            lname,
             email,
+            major,
+            company,
+            city,
+            state,
+            gradYear,
+            gpa,
+            salary,
+            title, 
+            linkedInURL
           });
       })
       .then(authUser => {
@@ -71,6 +84,7 @@ class SignUpFormBase extends Component {
 
   onChange = event => {
       this.setState({ [event.target.name]: event.target.value });
+      console.log(this.state);
   };
 
   render() {
@@ -79,16 +93,36 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      fname,
+      lname,
       error,
+      major,
+      city,
+      state,
+      title,
+      company,
+      linkedInURL,
+      gradYear,
+      gpa,
     } = this.state;
 
-    const { classes } = this.props;
-
-    const isInvalid =
+    const isInvalid = 
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
+      fname === '' ||
+      lname === '' ||
       email === '' ||
-      username === '';
+      username === '' ||
+      major === '' ||
+      city === '' ||
+      state === '' ||
+      title === '' ||
+      company === '' ||
+      gradYear === '' ||
+      linkedInURL === '' ||
+      gpa === '';
+
+      const array = [passwordOne, passwordTwo, fname, lname, email, username, major, city, state, title, company, gradYear, linkedInURL, gpa];
 
     return (
       <React.Fragment>
@@ -119,9 +153,9 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="firstName"
-                    name="firstName"
-                    label="First name"
+                    id="fname"
+                    name="fname"
+                    label="First Name"
                     fullWidth
                     autoComplete="fname"
                     onChange={this.onChange}
@@ -130,9 +164,9 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
-                    id="lastName"
-                    name="lastName"
-                    label="Last name"
+                    id="lname"
+                    name="lname"
+                    label="Last Name"
                     fullWidth
                     autoComplete="lname"
                     onChange={this.onChange}
@@ -172,7 +206,7 @@ class SignUpFormBase extends Component {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField id="state" name="state" label="State/Province/Region" fullWidth />
+                  <TextField required id="state" name="state" label="State/Province/Region" fullWidth onChange={this.onChange} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -207,9 +241,39 @@ class SignUpFormBase extends Component {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
+                    id="title"
+                    name="title"
+                    label="Work Title"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
                     id="salary"
                     name="salary"
                     label="Salary"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="gradYear"
+                    name="gradYear"
+                    label="Graduation Year"
+                    fullWidth
+                    onChange={this.onChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="linkedInURL"
+                    name="linkedInURL"
+                    label="LinkedIn URL"
                     fullWidth
                     onChange={this.onChange}
                   />
