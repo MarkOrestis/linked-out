@@ -34,29 +34,4 @@ const NavigationNonAuth = () => (
   </ul>
 );
 
-// const links = {
-//   position: 'fixed',
-//   right: 0,
-//   top: 0
-// }
-
-// const ul = {
-//   listStyleType: 'none',
-//   margin: '0',
-//   padding: '0',
-//   overflow: 'hidden',
-//   backgroundColor: '#333333'
-// }
-
-// const li = {
-//   float: 'right'
-// }
-
-// const hm = {
-//   display: 'block',
-//   color: 'white',
-//   textAlign: 'center',
-//   padding: '16px',
-//   textDecoration: 'none'
-// }
 export default Navigation;

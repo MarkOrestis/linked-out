@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,6 +14,15 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import picture from './avatar.png';
+
+import { withFirebase } from '../Firebase';
+import React, { Component } from 'react';
+
+import firebase from './firebase';
+
+import { AuthUserContext } from '../Session';
+
+
 
 const styles = theme => ({
 	avatar: {
@@ -144,7 +152,16 @@ function WorkContainer(props) {
   );
 }
 
-class Profile extends React.Component {
+class Profile extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false,
+			user: {},
+		  };
+	}
+
 	state = {
 		value: 0,
 	};
@@ -152,6 +169,28 @@ class Profile extends React.Component {
 	handleChange = (event, value) => {
 		this.setState({ value });
 	};
+
+	componentDidMount() {
+		console.log(firebase.auth().currentUser)
+		// this.setState({ loading: true });
+		// console.log(authUser)
+		// this.props.firebase.user().on('value', snapshot => {
+		// 	const userObject = snapshot.val();
+	  
+		// 	const userList = Object.keys(userObject).map(key => ({
+		// 	  ...userObject[key],
+		// 	  uid: key,
+		// 	}));
+
+		// 	console.log(userList)
+	  
+		// 	this.setState({
+		// 	  user: userList,
+		// 	  loading: false,
+		// 	});
+
+		// });
+	}
 	
 	render() {
 		const { classes } = this.props;
@@ -188,69 +227,4 @@ Profile.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Profile);
-
-/*
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-});
-
-function ProfilePic(props) {
-	const { classes } = props;
-	return (
-		<div className={classes.root}>
-		</div>
-	)
-}
-
-class ProfileTabs extends React.Component {
-  state = {
-    value: 0,
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="About" />
-            <Tab label="Connections" />
-            <Tab label="Contact" />
-          </Tabs>
-        </AppBar>
-        {value === 0 && <TabContainer>Item One</TabContainer>}
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
-      </div>
-    );
-  }
-}
-
-ProfileTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ProfileTabs);
-*/
+export default withFirebase(withStyles(styles)(Profile));

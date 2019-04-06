@@ -101,7 +101,7 @@ class Visualization extends Component {
 	        .force("x", d3.forceX().x(w / 2))
 		
 		
-			console.log(data)
+			// console.log(data)
 
 	        data.forEach(function (d) {
 	        	// console.log(d);
@@ -135,7 +135,7 @@ class Visualization extends Component {
 	                div.transition()
 	                    .duration(200)
 	                    .style("opacity", .9);
-	                div.html("Name: " + d.name +"<br/>" +
+	                div.html("Name: " + (d.fname + ' ' + d.lname) +"<br/>" +
 	                        "Major: " + d.major + "<br/>" +
 	                        "Company: " + d.company + "<br/>"
 	                )

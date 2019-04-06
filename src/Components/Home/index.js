@@ -54,7 +54,7 @@ const mainSectionItems = (
 
 const secondarySectionItems = (
 	<div>
-		<ListSubheader inset>Viz Actions?</ListSubheader>
+		<ListSubheader inset>Viz Actions</ListSubheader>
 		<ListItem button>
 			<ListItemIcon>
 				<AllIcon />
@@ -172,6 +172,8 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
+
+	
 	state = {
 		drawerOpen : true,
 		selectedIndex : 0,
