@@ -23,6 +23,7 @@ import FilterIcon from '@material-ui/icons/FilterList';
 import AllIcon from '@material-ui/icons/FormatAlignJustify';
 import Profile from './Profile';
 import Visualization from './Visualization';
+import SignOutButton from '../SignOut'
 
 import { withAuthorization } from '../Session';
 
@@ -234,6 +235,7 @@ class Dashboard extends React.Component {
 						<Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
 							Dashboard
 						</Typography>
+						<SignOutButton badgeContent={4} color="secondary" />
 					</Toolbar>
 				</AppBar>
 				<Drawer variant="permanent" classes={{paper: classNames(classes.drawerPaper, !this.state.drawerOpen && classes.drawerPaperClose)}} open={this.state.open}>

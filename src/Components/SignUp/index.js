@@ -16,7 +16,6 @@ import Link from '@material-ui/core/Link'
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
     <SignUpForm />
   </div>
 );
@@ -218,6 +217,7 @@ class SignUpFormBase extends Component {
                 <Button
                 type="submit"
                 disabled={isInvalid}
+                style={moreLinks}
                 fullWidth
                 variant="contained"
                 color="primary"
