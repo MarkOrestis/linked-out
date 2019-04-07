@@ -220,10 +220,6 @@ class Dashboard extends React.Component {
 		// }
 	}
 
-	// handleProfileClick = () => {
-	// 	this.setState
-	// }
-
 	render() {
 		const { classes } = this.props;
 		return (
