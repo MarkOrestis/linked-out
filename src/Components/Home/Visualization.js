@@ -259,7 +259,7 @@ class Visualization extends Component {
 		    <div id="toolbar">
 		      	<Button variant="contained" color="primary" id="all" className='button' style={{ margin: '5px 0px'}}>All</Button>
 		      	<div style={{width: 8, display: 'inline-block'}}/>
-		      	<Button variant="contained" color="primary" id="year" className='button' style={{ margin: '5px 0px'}}>By Year</Button>
+		      	<Button variant="contained" color="primary" id="gradYear" className='button' style={{ margin: '5px 0px'}}>By Year</Button>
 		      	<div style={{width: 8, display: 'inline-block'}}/>
 		      	<Button variant="contained" color="primary" id="major" className='button' style={{ margin: '5px 0px'}}>By Major</Button>
 		      	<div style={{width: 8, display: 'inline-block'}}/>
