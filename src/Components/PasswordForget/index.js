@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {Link as Wow}   from 'react-router-dom';
-
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { auth } from 'firebase';
+import { withStyles, Typography } from '@material-ui/core';
 
 
 const PasswordForgetPage = () => (
   <div>
-    <h1>PasswordForget</h1>
+    <Typography style={{fontSize: '22px'}}>Password Forget</Typography>
     <PasswordForgetForm />
   </div>
 );
@@ -43,25 +45,27 @@ class PasswordForgetFormBase extends Component {
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state.email)
   };
 
   render() {
     const { email, error } = this.state;
-
-    const isInvalid = email === '';
+    const { classes } = this.props;
+    const isInvalid = this.state.email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <form onSubmit={this.onSubmit} className={classes.container} noValidate autoComplete="off">
+        <TextField
+          id="email"
           name="email"
-          value={this.state.email}
+          label="Email Address"
+          className={classes.textField}
           onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
+          margin="normal"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button className={classes.button} disabled={isInvalid} type="submit">
           Reset My Password
-        </button>
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -76,6 +80,26 @@ const PasswordForgetLink = () => (
     </Wow>
   </div>
 );
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+  button: {
+    margin: '20px'
+  }
+});
 
 export const linkStyle = {
   margin: '5px auto',
@@ -85,6 +109,6 @@ export const linkStyle = {
 
 export default PasswordForgetPage;
 
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
+const PasswordForgetForm = withFirebase(withStyles(styles)(PasswordForgetFormBase));
 
 export { PasswordForgetForm, PasswordForgetLink };
